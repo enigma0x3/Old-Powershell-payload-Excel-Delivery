@@ -1,6 +1,8 @@
 Powershell-payload-Excel-Delivery
 =================================
 
+Follow me on Twitter: @enigma0x3
+
 Contains automatic persistence.
 
 
