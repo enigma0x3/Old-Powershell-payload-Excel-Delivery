@@ -12,4 +12,4 @@ This attack uses an excel document to get into the organization (bypassing filte
 
 Once the payload is ran, it runs in the powershell process, so if the user closes excel, you keep your shell. You also remain in a stable process until reboot, so migration is not needed. AV also does not pick this up.
 
-Shoutout to @TheColonial for helping me with the code for hiding the window upon payload execution and testing the code. Big thanks mate :)
+Shoutout to @TheColonial for helping me with the code for hiding the window upon payload execution and testing the code as it was developed. Big thanks mate :)
