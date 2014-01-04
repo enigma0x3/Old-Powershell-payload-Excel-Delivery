@@ -5,7 +5,7 @@ Changes made as of 1/4/13
 powershell path.
 -Added a self-deleting bat to remove the payload off of the system.
 -Updated the persist script to also do system architecture checks and choose the correct powershell path.
-
+-Updated the cleanup script
 
 
 --- @enigma0x3
