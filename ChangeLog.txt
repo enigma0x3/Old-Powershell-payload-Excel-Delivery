@@ -1,0 +1,11 @@
+Changes made as of 1/4/13
+
+-Revamped code by adding functions in the VBA
+-Added system architecture checks. All you have to do now is host one 32bit payload and the macro will chose the proper
+powershell path.
+-Added a self-deleting bat to remove the payload off of the system.
+-Updated the persist script to also do system architecture checks and choose the correct powershell path.
+
+
+
+--- @enigma0x3
